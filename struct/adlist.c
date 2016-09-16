@@ -386,20 +386,32 @@ listNode *listIndex(list *list, long index) {
 /* Rotate the list removing the tail node and inserting it to the head. */
 /* rotate操作其实就是把尾部结点挪到头部，原本倒数第二个结点变为尾部结点 */
 void listRotate(list *list) {
-    listNode *tail = list->tail;
+    //listNode *tail = list->tail;
 
 	//如果长度为不足，直接返回，之前宏定义的方法
     if (listLength(list) <= 1) return;
 
     /* Detach current tail */
     //替换新的尾部结点，原结点后挪一个位置
-    list->tail = tail->prev;
-    list->tail->next = NULL;
+    //list->tail = tail->prev;
+    //list->tail->next = NULL;
     
     /* Move it as head */
    	//设置新结点
-    list->head->prev = tail;
-    tail->prev = NULL;
-    tail->next = list->head;
-    list->head = tail;
+    //list->head->prev = tail;
+    //tail->prev = NULL;
+    //tail->next = list->head;
+    //list->head = tail;
+
+
+    //////
+    // make list to a loop
+    list->head->prev = list->tail;
+    list->tail->next = list->head;
+    // reset head and tail
+    list->head = list->tail;
+    list->tail = list->tail->prev;
+    // break the loop to list
+    list->tail->next = NULL;
+    list->head->prev = NULL;
 }
